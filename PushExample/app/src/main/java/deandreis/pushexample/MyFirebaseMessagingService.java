@@ -17,6 +17,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import static deandreis.pushexample.ActivityBase.BROADCAST;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
@@ -62,9 +64,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [END receive_message]
 
 
+    public static int id = 101;
+
     private void loadData() {
 
-        int id = 1;
+
 
         Intent resultIntent = new Intent(this, ActivityB.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -78,6 +82,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
+        builder.setAutoCancel(true);
         builder.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("My notification")
                 .setContentText("Hello World!");
@@ -87,6 +92,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(id, builder.build());
 
+
+        Intent intent = new Intent(BROADCAST);
+        sendBroadcast(intent);
     }
 
     /**
