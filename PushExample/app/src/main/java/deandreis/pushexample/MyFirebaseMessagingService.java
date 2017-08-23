@@ -18,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import static deandreis.pushexample.ActivityBase.BROADCAST;
+import static deandreis.pushexample.MyApplication.session;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -68,17 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void loadData() {
 
-
-
         Intent resultIntent = new Intent(this, ActivityB.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        // Adds the back stack
-        stackBuilder.addParentStack(ActivityB.class);
-        // Adds the Intent to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        // Gets a PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
@@ -86,6 +77,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         builder.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("My notification")
                 .setContentText("Hello World!");
+
+        PendingIntent resultPendingIntent;
+
+
+        Log.e(TAG, "Session: " + (session == null));
+
+        if (session == null) {
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            // Adds the back stack
+            stackBuilder.addParentStack(ActivityB.class);
+            // Adds the Intent to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
+            // Gets a PendingIntent containing the entire back stack
+            resultPendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        } else {
+
+            resultPendingIntent =
+                    PendingIntent.getActivity(
+                            this,
+                            0,
+                            resultIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+
+        }
+
 
         builder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager =
