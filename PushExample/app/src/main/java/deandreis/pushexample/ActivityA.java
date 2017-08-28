@@ -16,9 +16,22 @@ public class ActivityA extends ActivityBase {
         setContentView(R.layout.activity_a);
     }
 
+    public void onMain(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     public void onB(View v) {
         Intent intent = new Intent(this, ActivityB.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        super.onNewIntent(intent);
+
     }
 
 }

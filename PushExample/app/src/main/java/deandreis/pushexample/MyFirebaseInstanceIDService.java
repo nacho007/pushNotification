@@ -4,10 +4,19 @@ package deandreis.pushexample;
  * Created by ignaciodeandreisdenis on 22/8/17.
  */
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+
+import java.util.Random;
+
+import static deandreis.pushexample.Contants.PUSH;
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
@@ -35,7 +44,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     /**
      * Persist token to third-party servers.
-     *
+     * <p>
      * Modify this method to associate the user's FCM InstanceID token with any server-side account
      * maintained by your application.
      *
@@ -43,5 +52,30 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         // TODO: Implement this method to send token to your app server.
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        builder.setAutoCancel(true);
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText("Body");
+
+
+        Intent resultIntent;
+        PendingIntent resultPendingIntent;
+
+        resultIntent = new Intent(this, ActivityA.class);
+        resultIntent.putExtra(PUSH, true);
+        resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        Random random = new Random();
+        int notificationId = random.nextInt(9999 - 1000) + 1000;
+
+        builder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(notificationId, builder.build());
+
     }
 }
