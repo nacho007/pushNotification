@@ -1,6 +1,5 @@
 package deandreis.pushexample;
 
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import static deandreis.pushexample.MyFirebaseMessagingService.id;
 
 /**
  * Created by ignaciodeandreisdenis on 23/8/17.
@@ -38,9 +35,9 @@ public class ActivityBase extends AppCompatActivity {
 
                     Log.e("BROADCAST", "onReceive");
 
-                    String ns = Context.NOTIFICATION_SERVICE;
-                    NotificationManager nMgr = (NotificationManager) getSystemService(ns);
-                    nMgr.cancel(id);
+//                    String ns = Context.NOTIFICATION_SERVICE;
+//                    NotificationManager nMgr = (NotificationManager) getSystemService(ns);
+//                    nMgr.cancel(id);
 
                     if (intent.getAction() == BROADCAST) {
 

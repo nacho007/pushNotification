@@ -60,9 +60,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
     // [END receive_message]
 
-
-    public static int id = 101;
-
     private void loadData(String messageBody) {
         Intent intent = new Intent(this, ActivityA.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

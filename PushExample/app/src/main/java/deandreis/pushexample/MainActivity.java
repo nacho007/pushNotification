@@ -20,7 +20,6 @@ public class MainActivity extends ActivityBase {
         Intent intent = new Intent(this, ActivityA.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-//        finish();
     }
 
 }

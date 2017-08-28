@@ -9,6 +9,7 @@ import android.app.Application;
 public class MyApplication extends Application {
 
     public static boolean activityVisible = false;
+    public static Object session = null;
 
     @Override
     public void onCreate() {
